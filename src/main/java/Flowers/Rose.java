@@ -1,5 +1,6 @@
 package Flowers;
 
+import java.sql.Statement;
 import java.time.Duration;
 
 public class Rose extends MultipleFlowers{
@@ -25,5 +26,21 @@ public class Rose extends MultipleFlowers{
     public void print(){
         super.print();
         System.out.println("Spikes: " + isSpiked);
+    }
+    @Override
+    public int saveIntoDB(Statement stmt) {
+        int id = super.saveIntoDB(stmt);
+        if (id == -1) {
+            return -1;
+        }
+        String sql = "INSERT INTO flowergarden.rose (id, isSpiked) VALUES ('"
+                + id + "', " + this.isSpiked + ")";
+        try {
+            stmt.executeUpdate(sql);
+            return id;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 }

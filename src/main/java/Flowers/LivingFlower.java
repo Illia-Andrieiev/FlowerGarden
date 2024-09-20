@@ -1,7 +1,10 @@
 package Flowers;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.Timestamp;
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class LivingFlower extends Flower {
@@ -46,5 +49,24 @@ public class LivingFlower extends Flower {
 
     public Duration getLifeTime() {
         return lifeTime;
+    }
+    @Override
+    public int saveIntoDB(Statement stmt) {
+        int id = super.saveIntoDB(stmt);
+        if (id == -1) {
+            return -1;
+        }
+        Timestamp timestamp = Timestamp.valueOf(cuttingDate);
+        String sql = "INSERT INTO flowergarden.livingflower (id, cuttingDate, lifeTime) VALUES (?, ?, ?)";
+        try (PreparedStatement pstmt = stmt.getConnection().prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            pstmt.setTimestamp(2, timestamp);
+            pstmt.setDouble(3, this.lifeTime.toSeconds());
+            pstmt.executeUpdate();
+            return id;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 }

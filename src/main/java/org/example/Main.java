@@ -5,6 +5,7 @@ import Flowers.Flower;
 import Flowers.LivingFlower;
 import Flowers.MultipleFlowers;
 
+import java.sql.*;
 import java.time.Duration;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -29,5 +30,30 @@ public class Main {
         System.out.println("******************************");
         bouquet.removeWiltedFlowers(90);
         bouquet.print();
+
+
+        String url = "jdbc:mysql://localhost:3306/flowergarden";
+        String user = "root";
+        String password = "a2324252627";
+        Flower ff = new MultipleFlowers(5,12,
+                "Rose", Duration.ofSeconds(10),5);
+        try (Connection conn = DriverManager.getConnection(url, user, password);
+             Statement stmt = conn.createStatement()) {
+            ff.saveIntoDB(stmt);
+            String query = "SELECT * FROM multipleflowers";
+            ResultSet rs = stmt.executeQuery(query);
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int columnsNumber = rsmd.getColumnCount();
+            while (rs.next()) {
+                for (int i = 1; i <= columnsNumber; i++) {
+                    if (i > 1) System.out.print(", ");
+                    String columnValue = rs.getString(i);
+                    System.out.print(columnValue + " " + rsmd.getColumnName(i));
+                }
+                System.out.println();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

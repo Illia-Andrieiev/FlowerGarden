@@ -1,5 +1,8 @@
 package Flowers;
 
+import java.sql.PreparedStatement;
+import java.sql.Statement;
+import java.sql.Timestamp;
 import java.time.Duration;
 
 public class Tulip extends LivingFlower{
@@ -18,5 +21,21 @@ public class Tulip extends LivingFlower{
     public void print(){
         super.print();
         System.out.println("rarity: " + rarityCoef);
+    }
+    @Override
+    public int saveIntoDB(Statement stmt) {
+        int id = super.saveIntoDB(stmt);
+        if (id == -1) {
+            return -1;
+        }
+        String sql = "INSERT INTO flowergarden.tulip (id, rarityCoef) VALUES ('"
+                + id + "', " + this.rarityCoef + ")";
+        try {
+            stmt.executeUpdate(sql);
+            return id;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 }

@@ -42,7 +42,7 @@ public class Bouquet {
 
     /* Find all flowers with stem length in interval */
     public ArrayList<Flower> findInStemDiapason(double minLen, double maxLen){
-        ArrayList<Flower> res = new ArrayList<Flower>();
+        ArrayList<Flower> res = new ArrayList<>();
         for (Flower flower: flowers){
             double len = flower.getStemLength();
             if(len >= minLen && len <= maxLen)
