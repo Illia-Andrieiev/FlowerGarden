@@ -1,5 +1,6 @@
 package org.example;
 
+import Atributes.Decoration;
 import Flowers.Flower;
 import Flowers.LivingFlower;
 import Flowers.MultipleFlowers;
@@ -10,14 +11,14 @@ import java.time.Duration;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
+        Decoration ribbon = new Decoration(150, "red ribbon");
         LivingFlower f = new LivingFlower(100,100,"rose", Duration.ofMinutes(1));
-        f.setFreshness(70);
         Flower f2 = new Flower(120,70,"georgine");
         Flower f3 = new Flower(150,90,"artificial rose");
-        f3.setFreshness(80);
         LivingFlower f4 = new MultipleFlowers(65,110,
                 "rose", Duration.ofMinutes(3),5);
         Bouquet bouquet = new Bouquet();
+        bouquet.addDecoration(ribbon);
         bouquet.addFlower(f);
         bouquet.addFlower(f2);
         bouquet.addFlower(f3);
