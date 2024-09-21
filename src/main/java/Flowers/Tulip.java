@@ -1,8 +1,6 @@
 package Flowers;
 
-import java.sql.PreparedStatement;
-import java.sql.Statement;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.time.Duration;
 
 public class Tulip extends LivingFlower{
@@ -37,5 +35,24 @@ public class Tulip extends LivingFlower{
             e.printStackTrace();
         }
         return -1;
+    }
+
+    public static Tulip readFromDB(Connection connection, int id) {
+        String query = "SELECT * FROM tulip WHERE id = ?";
+        Tulip flower = null;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                double coef = resultSet.getInt("rarityCoef");
+                LivingFlower f = LivingFlower.readFromDB(connection,id);
+                flower = new Tulip(f.cost, f.stemLength, f.name, f.lifeTime, coef);
+                flower.cuttingDate = f.cuttingDate;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return flower;
     }
 }

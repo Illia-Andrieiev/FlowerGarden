@@ -1,7 +1,8 @@
 package Atributes;
 
-import java.sql.ResultSet;
-import java.sql.Statement;
+import Flowers.Flower;
+
+import java.sql.*;
 
 public class Decoration {
     /* Decoration name */
@@ -36,5 +37,22 @@ public class Decoration {
             e.printStackTrace();
         }
         return -1;
+    }
+
+    public static Decoration readFromDB(Connection connection, int id) {
+        String query = "SELECT * FROM decoration WHERE id = ?";
+        Decoration deco = null;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                String name = resultSet.getString("name");
+                double cost = resultSet.getDouble("cost");
+                deco = new Decoration(cost, name);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return deco;
     }
 }

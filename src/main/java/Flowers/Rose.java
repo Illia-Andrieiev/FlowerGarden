@@ -1,6 +1,6 @@
 package Flowers;
 
-import java.sql.Statement;
+import java.sql.*;
 import java.time.Duration;
 
 public class Rose extends MultipleFlowers{
@@ -42,5 +42,24 @@ public class Rose extends MultipleFlowers{
             e.printStackTrace();
         }
         return -1;
+    }
+    public static Rose readFromDB(Connection connection, int id) {
+        String query = "SELECT * FROM rose WHERE id = ?";
+        Rose flower = null;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                int isSpiked = resultSet.getInt("isSpiked");
+                MultipleFlowers f = MultipleFlowers.readFromDB(connection,id);
+                flower = new Rose(f.cost, f.stemLength, f.name, f.lifeTime,
+                        f.flowersOnStemAmount, isSpiked != 0);
+                flower.cuttingDate = f.cuttingDate;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return flower;
     }
 }

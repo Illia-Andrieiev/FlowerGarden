@@ -1,7 +1,6 @@
 package Flowers;
 
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.time.Duration;
 
 public class MultipleFlowers extends LivingFlower{
@@ -38,5 +37,25 @@ public class MultipleFlowers extends LivingFlower{
             e.printStackTrace();
         }
         return -1;
+    }
+
+    public static MultipleFlowers readFromDB(Connection connection, int id) {
+        String query = "SELECT * FROM multipleflowers WHERE id = ?";
+        MultipleFlowers flower = null;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                int amount = resultSet.getInt("flowersOnStemAmount");
+                LivingFlower f = LivingFlower.readFromDB(connection,id);
+                flower = new MultipleFlowers(f.cost, f.stemLength, f.name, f.lifeTime, amount);
+                flower.cuttingDate = f.cuttingDate;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return flower;
     }
 }

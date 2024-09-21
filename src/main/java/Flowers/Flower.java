@@ -1,7 +1,6 @@
 package Flowers;
 
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
 public class Flower {
     /* Flower`s name */
@@ -53,5 +52,26 @@ public class Flower {
             e.printStackTrace();
         }
         return -1;
+    }
+
+    public static Flower readFromDB(Connection connection, int id) {
+        String query = "SELECT * FROM flower WHERE id = ?";
+        Flower flower = null;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                String name = resultSet.getString("name");
+                double cost = resultSet.getDouble("cost");
+                double stemLength = resultSet.getDouble("stemLength");
+
+                flower = new Flower(cost, stemLength, name);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return flower;
     }
 }

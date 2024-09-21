@@ -1,9 +1,6 @@
 package Flowers;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
@@ -30,8 +27,10 @@ public class LivingFlower extends Flower {
     @Override
     public double getFreshness(){
         Duration passedTime = Duration.between(cuttingDate, LocalDateTime.now());
-        double newFreshness = (double)passedTime.toMillis() /
-                lifeTime.toMillis() * 100;
+        double passedT = (double)passedTime.toMillis();
+        double lifeT = (double)lifeTime.toMillis();
+        double newFreshness =  (lifeT - passedT) / lifeT
+                 * 100;
         double roundedFreshness = Math.round(newFreshness* 100.0) / 100.0;
         return roundedFreshness > 0 ? roundedFreshness : 0;
     }
@@ -68,5 +67,28 @@ public class LivingFlower extends Flower {
             e.printStackTrace();
         }
         return -1;
+    }
+
+    public static LivingFlower readFromDB(Connection connection, int id) {
+        String query = "SELECT * FROM livingFlower WHERE id = ?";
+        LivingFlower livingFlower = null;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                java.sql.Timestamp cuttingDate = resultSet.getTimestamp("cuttingDate");
+                double lifeTime = resultSet.getDouble("lifeTime");
+                Flower f = Flower.readFromDB(connection,id);
+                livingFlower = new LivingFlower(f.cost, f.stemLength,
+                        f.name, Duration.ofSeconds((long)lifeTime));
+                livingFlower.cuttingDate = cuttingDate.toLocalDateTime();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return livingFlower;
     }
 }

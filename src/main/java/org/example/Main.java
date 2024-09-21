@@ -4,6 +4,7 @@ import Atributes.Decoration;
 import Flowers.Flower;
 import Flowers.LivingFlower;
 import Flowers.MultipleFlowers;
+import Flowers.Rose;
 
 import java.sql.*;
 import java.time.Duration;
@@ -15,7 +16,8 @@ public class Main {
         Decoration ribbon = new Decoration(150, "red ribbon");
         LivingFlower f = new LivingFlower(100,100,"rose", Duration.ofMinutes(1));
         Flower f2 = new Flower(120,70,"georgine");
-        Flower f3 = new Flower(150,90,"artificial rose");
+        Flower f3 = new Rose(150,90,"artificial rose",
+                Duration.ofMinutes(1), 4,false);
         LivingFlower f4 = new MultipleFlowers(65,110,
                 "rose", Duration.ofMinutes(3),5);
         Bouquet bouquet = new Bouquet();
@@ -39,8 +41,8 @@ public class Main {
                 "Rose", Duration.ofSeconds(10),5);
         try (Connection conn = DriverManager.getConnection(url, user, password);
              Statement stmt = conn.createStatement()) {
-            ff.saveIntoDB(stmt);
-            String query = "SELECT * FROM multipleflowers";
+            //f3.saveIntoDB(stmt);
+            String query = "SELECT * FROM rose";
             ResultSet rs = stmt.executeQuery(query);
             ResultSetMetaData rsmd = rs.getMetaData();
             int columnsNumber = rsmd.getColumnCount();
@@ -52,6 +54,8 @@ public class Main {
                 }
                 System.out.println();
             }
+            Flower fff = Rose.readFromDB(conn, 19);
+            fff.print();
         } catch (Exception e) {
             e.printStackTrace();
         }
