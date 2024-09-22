@@ -6,6 +6,9 @@ import Flowers.LivingFlower;
 import Flowers.MultipleFlowers;
 import Flowers.Rose;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.*;
 import java.time.Duration;
 
@@ -33,12 +36,22 @@ public class Main {
         bouquet.removeWiltedFlowers(90);
         bouquet.print();
 
+        /* read password */
+        String fileName = "src/database/password.txt";
+        String password = "";
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+            password = reader.readLine();
+        } catch (IOException e) {
+            System.err.println("Ошибка при чтении файла: " + e.getMessage());
+        }
 
         String url = "jdbc:mysql://localhost:3306/flowergarden";
         String user = "root";
-        String password = "a2324252627";
+
         Flower ff = new MultipleFlowers(5,12,
                 "Rose", Duration.ofSeconds(10),5);
+        /* open connection */
         try (Connection conn = DriverManager.getConnection(url, user, password);
              Statement stmt = conn.createStatement()) {
             //f3.saveIntoDB(stmt);
