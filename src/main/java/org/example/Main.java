@@ -34,7 +34,7 @@ public class Main {
         bouquet.print();
         System.out.println("******************************");
         bouquet.removeWiltedFlowers(90);
-        bouquet.print();
+        //bouquet.print();
 
         /* read password */
         String fileName = "src/database/password.txt";
@@ -43,7 +43,7 @@ public class Main {
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             password = reader.readLine();
         } catch (IOException e) {
-            System.err.println("Ошибка при чтении файла: " + e.getMessage());
+            System.err.println("File reading error: " + e.getMessage());
         }
 
         String url = "jdbc:mysql://localhost:3306/flowergarden";
@@ -67,6 +67,7 @@ public class Main {
                 }
                 System.out.println();
             }
+            System.out.println(" read method: ");
             Flower fff = Rose.readFromDB(conn, 19);
             fff.print();
         } catch (Exception e) {
