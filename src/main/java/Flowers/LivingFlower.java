@@ -38,7 +38,11 @@ public class LivingFlower extends Flower {
     public double getCost() {
         return cost * getFreshness() / 100;
     }
-
+    @Override
+    public String toString(){
+        return super.toString() + " Freshness: " + getFreshness() + "%" +
+        " Flower life time: " + lifeTime.toHours() + " hours";
+    }
     @Override
     public void print(){
         super.print();

@@ -16,7 +16,11 @@ public class Flower {
         this.stemLength = stemLength;
         this.name = name;
     }
-
+    @Override
+    public String toString(){
+        return "Flower Name: " + name+ " Cost: " + cost + " uah" +
+        " Stem Length: " + stemLength + " cm";
+    }
     public double getFreshness() {
         return 100;
     }

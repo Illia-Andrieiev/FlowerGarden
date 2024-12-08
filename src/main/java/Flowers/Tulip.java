@@ -16,6 +16,10 @@ public class Tulip extends LivingFlower{
         return cost * rarityCoef;
     }
     @Override
+    public String toString(){
+        return super.toString() + " rarity: " + rarityCoef;
+    }
+    @Override
     public void print(){
         super.print();
         System.out.println("rarity: " + rarityCoef);

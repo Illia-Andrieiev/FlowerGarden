@@ -16,7 +16,10 @@ public class MultipleFlowers extends LivingFlower{
     public double getCost(){
         return super.getCost() * flowersOnStemAmount;
     }
-
+    @Override
+    public String toString(){
+        return super.toString() + " Flowers on stem: " + flowersOnStemAmount;
+    }
     @Override
     public void print(){
         super.print();

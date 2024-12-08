@@ -23,6 +23,10 @@ public class Rose extends MultipleFlowers{
             return cost * 1.2;
     }
     @Override
+    public String toString(){
+        return super.toString() + " Spikes: " + isSpiked;
+    }
+    @Override
     public void print(){
         super.print();
         System.out.println("Spikes: " + isSpiked);

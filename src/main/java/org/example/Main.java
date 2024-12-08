@@ -51,6 +51,7 @@ public class Main {
 
         Flower ff = new MultipleFlowers(5,12,
                 "Rose", Duration.ofSeconds(10),5);
+
         /* open connection */
         try (Connection conn = DriverManager.getConnection(url, user, password);
              Statement stmt = conn.createStatement()) {
@@ -59,6 +60,7 @@ public class Main {
             ResultSet rs = stmt.executeQuery(query);
             ResultSetMetaData rsmd = rs.getMetaData();
             int columnsNumber = rsmd.getColumnCount();
+            System.out.println(" db flowers: ");
             while (rs.next()) {
                 for (int i = 1; i <= columnsNumber; i++) {
                     if (i > 1) System.out.print(", ");
