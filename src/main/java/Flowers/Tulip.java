@@ -16,6 +16,16 @@ public class Tulip extends LivingFlower{
         return cost * rarityCoef;
     }
     @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        if (!super.equals(obj)) return false;
+
+        Tulip tulip = (Tulip) obj;
+        return Double.compare(tulip.rarityCoef, rarityCoef) == 0;
+    }
+
+    @Override
     public String toString(){
         return super.toString() + " rarity: " + rarityCoef;
     }

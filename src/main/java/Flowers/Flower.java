@@ -1,6 +1,7 @@
 package Flowers;
 
 import java.sql.*;
+import java.util.Objects;
 
 public class Flower {
     /* Flower`s name */
@@ -9,6 +10,15 @@ public class Flower {
     protected double cost;
     /* Length of flower`s stem in sm */
     protected double stemLength;
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Flower flower = (Flower) obj;
+        return Double.compare(flower.cost, cost) == 0 &&
+                Double.compare(flower.stemLength, stemLength) == 0 &&
+                Objects.equals(name, flower.name);
+    }
 
     /* Constructor */
     public Flower(double cost, double stemLength, String name) {

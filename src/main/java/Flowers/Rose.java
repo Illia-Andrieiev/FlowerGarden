@@ -14,6 +14,15 @@ public class Rose extends MultipleFlowers{
         super(cost, stemLength, name, lifeTime, flowersOnStemAmount);
         this.isSpiked = isSpiked;
     }
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        if (!super.equals(obj)) return false;
+
+        Rose rose = (Rose) obj;
+        return isSpiked == rose.isSpiked;
+    }
 
     @Override
     public double getCost(){

@@ -13,6 +13,16 @@ public class MultipleFlowers extends LivingFlower{
         this.flowersOnStemAmount = Math.abs(flowersOnStemAmount);
     }
     @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        if (!super.equals(obj)) return false;
+
+        MultipleFlowers that = (MultipleFlowers) obj;
+        return flowersOnStemAmount == that.flowersOnStemAmount;
+    }
+
+    @Override
     public double getCost(){
         return super.getCost() * flowersOnStemAmount;
     }

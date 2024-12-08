@@ -3,12 +3,23 @@ package Flowers;
 import java.sql.*;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class LivingFlower extends Flower {
     /* Flower cutting date */
     protected LocalDateTime cuttingDate;
     /* Represents how much time flower will live */
     protected Duration lifeTime;
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        if (!super.equals(obj)) return false;
+
+        LivingFlower that = (LivingFlower) obj;
+        return Objects.equals(cuttingDate, that.cuttingDate) &&
+                Objects.equals(lifeTime, that.lifeTime);
+    }
 
     /* Constructor */
     public LivingFlower(double cost, double stemLength,
