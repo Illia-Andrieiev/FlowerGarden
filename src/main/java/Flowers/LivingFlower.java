@@ -20,6 +20,10 @@ public class LivingFlower extends Flower {
         return Objects.equals(cuttingDate, that.cuttingDate) &&
                 Objects.equals(lifeTime, that.lifeTime);
     }
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), cuttingDate, lifeTime);
+    }
 
     /* Constructor */
     public LivingFlower(double cost, double stemLength,

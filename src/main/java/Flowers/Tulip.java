@@ -2,6 +2,7 @@ package Flowers;
 
 import java.sql.*;
 import java.time.Duration;
+import java.util.Objects;
 
 public class Tulip extends LivingFlower{
     /* multiplies on cost */
@@ -24,7 +25,10 @@ public class Tulip extends LivingFlower{
         Tulip tulip = (Tulip) obj;
         return Double.compare(tulip.rarityCoef, rarityCoef) == 0;
     }
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), rarityCoef);
+    }
     @Override
     public String toString(){
         return super.toString() + " rarity: " + rarityCoef;

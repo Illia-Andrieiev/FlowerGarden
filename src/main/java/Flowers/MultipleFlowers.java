@@ -2,6 +2,7 @@ package Flowers;
 
 import java.sql.*;
 import java.time.Duration;
+import java.util.Objects;
 
 public class MultipleFlowers extends LivingFlower{
     /* How many flowers on stem */
@@ -20,6 +21,10 @@ public class MultipleFlowers extends LivingFlower{
 
         MultipleFlowers that = (MultipleFlowers) obj;
         return flowersOnStemAmount == that.flowersOnStemAmount;
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), flowersOnStemAmount);
     }
 
     @Override

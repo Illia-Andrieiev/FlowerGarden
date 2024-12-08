@@ -19,6 +19,10 @@ public class Flower {
                 Double.compare(flower.stemLength, stemLength) == 0 &&
                 Objects.equals(name, flower.name);
     }
+    @Override
+    public int hashCode() {
+        return Objects.hash(cost, stemLength, name);
+    }
 
     /* Constructor */
     public Flower(double cost, double stemLength, String name) {

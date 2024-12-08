@@ -2,6 +2,7 @@ package Flowers;
 
 import java.sql.*;
 import java.time.Duration;
+import java.util.Objects;
 
 public class Rose extends MultipleFlowers{
     /* Is rose has spikes */
@@ -23,7 +24,10 @@ public class Rose extends MultipleFlowers{
         Rose rose = (Rose) obj;
         return isSpiked == rose.isSpiked;
     }
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), isSpiked);
+    }
     @Override
     public double getCost(){
         if(isSpiked)
