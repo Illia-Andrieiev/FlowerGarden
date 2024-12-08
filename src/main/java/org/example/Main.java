@@ -71,7 +71,7 @@ public class Main {
             }
             System.out.println(" read method: ");
             Flower fff = Rose.readFromDB(conn, 19);
-            fff.print();
+            System.out.println(fff);
         } catch (Exception e) {
             e.printStackTrace();
         }
