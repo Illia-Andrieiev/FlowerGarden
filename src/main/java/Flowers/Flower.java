@@ -31,10 +31,14 @@ public class Flower {
         this.name = name;
     }
     @Override
-    public String toString(){
-        return "Flower Name: " + name+ " Cost: " + cost + " uah" +
-        " Stem Length: " + stemLength + " cm";
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Flower Name: ").append(name)
+                .append(" Cost: ").append(cost).append(" uah")
+                .append(" Stem Length: ").append(stemLength).append(" cm");
+        return sb.toString();
     }
+
     public double getFreshness() {
         return 100;
     }
